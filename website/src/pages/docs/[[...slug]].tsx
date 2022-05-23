@@ -1,10 +1,10 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import { DocsContent, DocsTOC, MDXPage } from '@guild-docs/client';
+import { DocsContent, DocsTOC, MDXPage, EditOnGitHubButton } from '@guild-docs/client';
 import { MDXPaths, MDXProps } from '@guild-docs/server';
 import { getRoutes } from '../../../routes';
 
-export default MDXPage(({ content, TOC, MetaHead, BottomNavigation, frontMatter }) => {
+export default MDXPage(({ content, TOC, MetaHead, frontMatter, sourceFilePath }) => {
   return (
     <>
       <Head>{MetaHead}</Head>
@@ -12,7 +12,7 @@ export default MDXPage(({ content, TOC, MetaHead, BottomNavigation, frontMatter 
       {!frontMatter.fullWidth && (
         <DocsTOC>
           <TOC />
-          <BottomNavigation />
+          <EditOnGitHubButton baseDir="website" branch="master" sourceFilePath={sourceFilePath} repo="urigo/mesh" />
         </DocsTOC>
       )}
     </>
@@ -21,14 +21,11 @@ export default MDXPage(({ content, TOC, MetaHead, BottomNavigation, frontMatter 
 
 export const getStaticProps: GetStaticProps = ctx => {
   return MDXProps(
-    ({ readMarkdownFile, getArrayParam }) => {
-      return readMarkdownFile('docs/', getArrayParam('slug'), { importPartialMarkdown: true });
-    },
+    ({ readMarkdownFile, getArrayParam }) =>
+      readMarkdownFile('docs/', getArrayParam('slug'), { importPartialMarkdown: true }),
     ctx,
     { getRoutes }
   );
 };
 
-export const getStaticPaths: GetStaticPaths = ctx => {
-  return MDXPaths('docs', { ctx });
-};
+export const getStaticPaths: GetStaticPaths = ctx => MDXPaths('docs', { ctx });
