@@ -1,5 +1,11 @@
 # @graphql-mesh/cli
 
+## 0.75.10
+
+### Patch Changes
+
+- [#4304](https://github.com/Urigo/graphql-mesh/pull/4304) [`e9a251cc8`](https://github.com/Urigo/graphql-mesh/commit/e9a251cc812dbe579a483b06be932e904891b752) Thanks [@enisdenjo](https://github.com/enisdenjo)! - WebSocket request must be under `req` for envelop context
+
 ## 0.75.9
 
 ### Patch Changes
